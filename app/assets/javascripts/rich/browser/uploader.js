@@ -6,7 +6,7 @@ rich.Uploader = function(){
 	
 	this._options = {
 		uploadButtonId: 'btn-upload-image',
-		insertionPoint: 'uploadWrapper',
+		insertionPoint: 'uploadBlock',
 		uploadType: $.QueryString["type"],
 		scoped: $.QueryString["scoped"],
 		scope_type: $.QueryString["scope_type"],
@@ -51,13 +51,17 @@ rich.Uploader.prototype = {
     } else {
 				$('#up'+id+' .spinner').first().addClass("error");
 				$('#up'+id+' .spinner').first().removeClass("spinning");
-                $('#up'+id+' .progress-bar').first().remove();
+        $('#up'+id+' .progress-bar').first().remove();
     }
   },
 
 	uploadSubmit: function(id, fileName) {
 		// insert a new image placeholder after the upload button
-		$('#'+this._options.insertionPoint).after('<li id="up'+id+'"><div class="placeholder progress"><div class="progress-bar" style="width: 0%;"></div><div class="spinner"></div></div><p>'+fileName+'</p></li>');
+		$('#'+this._options.insertionPoint).after('<li id="up'+id+'"><p class="rich-file-title"></p><div class="placeholder progress"><div class="progress-bar" style="width: 0%;"></div><div class="spinner"></div></div><p>'+fileName+'</p></li>');
+		// Close modal & clear textbox
+		$('#rich-upload-modal').modal('hide');
+		$('#rich_file_title').val('');
+		$('#rich_file_link_to').val('');
 	},
 	
 	uploadProgress: function(id, fileName, progress) {
