@@ -13,6 +13,8 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require_tree ./mixins
+ *= require bootstrap.min
+ *= require bootstrap-theme.min
 */
 
 
@@ -133,6 +135,7 @@ header {
 
 // Default thumbnail view
 #items {
+	$spaces: 155px;
 	list-style: none;
 	margin: 0 0 0 $margin;
 	padding: 0;
@@ -140,15 +143,12 @@ header {
 
 	li {
 		width: $imageSize;
-		height: $imageSize + $margin;
+		height: $imageSize + $spaces;
 		margin-right: $margin;
 		float: left;
 
-		* {
-				transition: opacity 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-moz-transition: opacity 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-ms-transition: opacity 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-webkit-transition: opacity 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
+		a.btn:visited {
+			color: #fff;
 		}
 
 		.placeholder {
@@ -220,13 +220,13 @@ header {
 			height: $margin;
 			overflow:hidden;
 			text-overflow: ellipsis;
-			color: $subtle;
+			color: $light;
 			width: 80px;
 		}
 
-		&:hover p {
+		/*&:hover p {
 			color: $light;
-		}
+		}*/
 
 		.delete {
 			position: absolute;
@@ -236,21 +236,45 @@ header {
 			width:$margin;
 			height: $margin;
 			background: image-url('rich/x-red.png') no-repeat right ($margin / 2 - 5);
-			opacity: 0.1;
+			opacity: 0.5;
 		}
 
-		&:hover .delete {
+		/*&:hover .delete {
 			opacity: 0.5;
 		}
 
 		&:hover .delete:hover {
 			opacity: 1;
+		}*/
+
+		div.rich-item-info {
+			height: 43px;
+
+			a.rich-file-link-to {
+				font-size: 10px;
+				width: 94px;
+				overflow: hidden;
+				display: inline-block;
+				text-overflow: ellipsis;
+			}
 		}
 
+		div.rich-file-actions {
+			.btn {
+				width: 100%;
+			}
+		}
+
+		p.rich-file-title {
+			font-size: 1.2em;
+			width: auto;
+			height: 25px;
+		}
 	}
 
 	#uploadBlock:hover .placeholder .spinner {
 		background-position: 0 -32px;
+		cursor: pointer;
 	}
 
 }

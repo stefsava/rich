@@ -391,6 +391,9 @@ qq.FileUploaderBasic.prototype = {
     _uploadFile: function(fileContainer){
         var id = this._handler.add(fileContainer);
         var fileName = this._handler.getName(id);
+        // set title & external url for image
+        this._options.params.file_title = $('#rich_file_title').val();
+        this._options.params.file_link_to = $('#rich_file_link_to').val();
 
         if (this._options.onSubmit(id, fileName) !== false){
             this._onSubmit(id, fileName);
