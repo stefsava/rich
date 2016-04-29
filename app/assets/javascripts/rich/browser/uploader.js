@@ -11,15 +11,13 @@ rich.Uploader = function(){
 		scoped: $.QueryString["scoped"],
 		scope_type: $.QueryString["scope_type"],
 		scope_id: $.QueryString["scope_id"],
-		file_title: $("#rich_file_title").text(),
-		file_link_to: $("#rich_file_link_to").text(),
 	};
 	
 	// create the qq uploader
 	var self = this;
 	var uploader = new qq.FileUploaderBasic({
-	  button: document.getElementById(self._options.uploadButtonId),
-		multiple: true,
+        button: document.getElementById(self._options.uploadButtonId),
+        multiple: true,
 		maxConnections: 3,
 		action: $("#new_rich_file").attr("action"),
 		params: { authenticity_token: $("input[name='authenticity_token']").attr("value"),
@@ -27,14 +25,22 @@ rich.Uploader = function(){
 				  scoped: this._options.scoped,
 				  scope_type: this._options.scope_type,
 				  scope_id: this._options.scope_id,
-				  file_title: this._options.file_title,
-				  file_link_to: this._options.file_link_to
+				  file_title: '',
+				  file_link_to: ''
 		},
 		debug: true,
 		onComplete: function(id, fileName, responseJSON) { self.uploadComplete(id, fileName, responseJSON); },
 		onSubmit: function(id, fileName) { self.uploadSubmit(id, fileName); },
 		onProgress: function(id, fileName, loaded, total) { self.uploadProgress(id, fileName, Math.round(loaded/total*100)); }
 	});
+
+    $('#rich-start-upload').click(function(){
+        uploader.addParams({
+            file_title: $('#rich_file_title').val(),
+            file_link_to: $('#rich_file_link_to').val()
+        });
+        uploader._uploadStoredFile();
+    });
 };
 
 rich.Uploader.prototype = {
