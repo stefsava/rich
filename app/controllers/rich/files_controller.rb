@@ -59,6 +59,9 @@ module Rich
         @file.owner_id = params[:scope_id].to_i
       end
 
+      @file.rich_file_title = params[:file_title]
+      @file.rich_file_link_to = params[:file_link_to]
+
       # use the file from Rack Raw Upload
       file_params = params[:file] || params[:qqfile]
       if(file_params)

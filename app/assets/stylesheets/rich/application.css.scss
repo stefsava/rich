@@ -15,6 +15,8 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require_tree ./mixins
+ *= require bootstrap.min
+ *= require bootstrap-theme.min
 */
 
 
@@ -155,6 +157,7 @@ header {
 
 // Default thumbnail view
 #items {
+	$spaces: 155px;
 	list-style: none;
 	margin: 0 0 0 $margin;
 	padding: 0;
@@ -163,15 +166,12 @@ header {
 	li {
     position: relative;
 		width: $imageSize;
-		height: $imageSize + $margin;
+		height: $imageSize + $spaces;
 		margin-right: $margin;
 		float: left;
 
-		* {
-				transition: all 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-moz-transition: all 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-ms-transition: all 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
-				-webkit-transition: all 85ms ease-in, box-shadow 85ms ease-in, color 85ms ease-in;
+		a.btn:visited {
+			color: #fff;
 		}
 
 		.placeholder {
@@ -243,13 +243,13 @@ header {
 			height: $margin;
 			overflow:hidden;
 			text-overflow: ellipsis;
-			color: $subtle;
+			color: $light;
 			width: 80px;
 		}
 
-		&:hover p {
+		/*&:hover p {
 			color: $light;
-		}
+		}*/
 
     &:not(#uploadBlock) {
       p:hover {
@@ -276,21 +276,45 @@ header {
 			width:$margin;
 			height: $margin;
 			background: image-url('rich/x-red.png') no-repeat right ($margin / 2 - 5);
-			opacity: 0.1;
+			opacity: 0.5;
 		}
 
-		&:hover .delete {
+		/*&:hover .delete {
 			opacity: 0.5;
 		}
 
 		&:hover .delete:hover {
 			opacity: 1;
+		}*/
+
+		div.rich-item-info {
+			height: 43px;
+
+			a.rich-file-link-to {
+				font-size: 10px;
+				width: 94px;
+				overflow: hidden;
+				display: inline-block;
+				text-overflow: ellipsis;
+			}
 		}
 
+		div.rich-file-actions {
+			.btn {
+				width: 100%;
+			}
+		}
+
+		p.rich-file-title {
+			font-size: 1.2em;
+			width: auto;
+			height: 25px;
+		}
 	}
 
 	#uploadBlock:hover .placeholder .spinner {
 		background-position: 0 -32px;
+		cursor: pointer;
 	}
 
 }
@@ -342,13 +366,13 @@ header {
 
   li {
     width: auto;
-    height: 32px;
+    height: 100px;
     float: none;
     margin-bottom: 16px;
 
     img, .placeholder {
-      height: 32px;
-      width: 32px;
+      height: 72px;
+      width: 72px;
       float: left;
       line-height: 32px;
       border: none;
@@ -371,10 +395,8 @@ header {
       color: $dark;
       font-size: 14px;
       width: auto;
-      height: 32px;
-      margin-left: 8px;
-      padding: 0 8px;
-      line-height: 32px;
+      height: 20px;
+      line-height: 20px;
       float: left;
       cursor: default;
       border-radius: 3px;
@@ -389,6 +411,44 @@ header {
         line-height: 24px;
         padding: 3px 5px;
       }
+    }
+
+    p.rich-file-title {
+      clear: both;
+      float: none;
+      line-height: 25px;
+      height: 25px;
+    }
+
+    div.rich-item-info {
+      height:auto;
+      float: left;
+
+      a.rich-file-link-to {
+        clear: both;
+        display: block;
+        width: auto;
+      }
+
+      a.delete {
+        margin: 0;
+      }
+    }
+
+    div.rich-file-actions {
+      margin-top: 42px;
+      margin-bottom: 0;
+
+      a.btn {
+        float: left;
+        width: auto;
+        margin-right: 5px;
+      }
+    }
+
+    div.rich-file-actions:after {
+      content: "";
+      clear: both;
     }
 
     .delete {

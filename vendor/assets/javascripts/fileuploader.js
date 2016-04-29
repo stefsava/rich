@@ -293,6 +293,9 @@ qq.FileUploaderBasic = function(o){
 };
 
 qq.FileUploaderBasic.prototype = {
+    addParams: function(params){
+        qq.extend(this._options.params, params);
+    },
     setParams: function(params){
         this._options.params = params;
     },
@@ -305,9 +308,10 @@ qq.FileUploaderBasic.prototype = {
         return new qq.UploadButton({
             element: element,
             multiple: this._options.multiple && qq.UploadHandlerXhr.isSupported(),
-            onChange: function(input){
-                self._onInputChange(input);
-            }
+            // Disable auto upload
+            //onChange: function(input){
+            //    self._onInputChange(input);
+            //}
         });
     },
     _createUploadHandler: function(){
@@ -367,6 +371,7 @@ qq.FileUploaderBasic.prototype = {
     _onCancel: function(id, fileName){
         this._filesInProgress--;
     },
+    // @deprecated
     _onInputChange: function(input){
         if (this._handler instanceof qq.UploadHandlerXhr){
             this._uploadFileList(input.files);
@@ -396,6 +401,17 @@ qq.FileUploaderBasic.prototype = {
             this._onSubmit(id, fileName);
             this._handler.upload(id, this._options.params);
         }
+    },
+    _uploadStoredFile: function(){
+        input = this._button.getInput();
+        if (this._handler instanceof qq.UploadHandlerXhr){
+            this._uploadFileList(input.files);
+        } else {
+            if (this._validateFile(input)){
+                this._uploadFile(input);
+            }
+        }
+        this._button.reset();
     },
     _validateFile: function(file){
         var name, size;

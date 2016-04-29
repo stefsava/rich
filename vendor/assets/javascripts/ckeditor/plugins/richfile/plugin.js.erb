@@ -4,11 +4,15 @@
 
 	CKEDITOR.plugins.add('richfile',
 	{
-	    init: function(editor) {
+			init: function(editor) {
 
 			// register a callback that actually inserts a selected image
-	    editor._.insertImagefn = CKEDITOR.tools.addFunction(function(url, id, name){
-				this.insertHtml('<img src="' + url + '" alt="" data-rich-file-id="' + id + '" />');
+			editor._.insertImagefn = CKEDITOR.tools.addFunction(function(url, id, name, link){
+				if (typeof link === "undefined" || link === null || link == '') {
+					this.insertHtml('<img src="' + url + '" alt="" data-rich-file-id="' + id + '" />');
+				} else {
+					this.insertHtml('<a href="' + link + '"><img src="' + url + '" alt="" data-rich-file-id="' + id + '" /></a>');
+				}
 			}, editor);
 
 			editor._.insertFilefn = CKEDITOR.tools.addFunction(function(url, id, name){
@@ -79,7 +83,7 @@
 				icon: "<%= asset_path 'rich/files.png' %>"
 			});
 
-	    }
+			}
 	});
 
 })();

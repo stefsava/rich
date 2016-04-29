@@ -122,12 +122,12 @@ rich.Browser.prototype = {
 		var id = $(item).data('rich-asset-id');
 		var type = $(item).data('rich-asset-type');
 		var name = $(item).data('rich-asset-name');
-
-
+		var linkTo = $(item).data('rich-file-link-to');
+		
 		if($.QueryString["CKEditor"]=='picker') {
 			window.opener.assetPicker.setAsset($.QueryString["dom_id"], url, id, type);
 		} else {
-			window.opener.CKEDITOR.tools.callFunction($.QueryString["CKEditorFuncNum"], url, id, name);
+			window.opener.CKEDITOR.tools.callFunction($.QueryString["CKEditorFuncNum"], url, id, name, linkTo);
 		}
 
 		// wait a short while before closing the window or regaining focus
@@ -269,8 +269,12 @@ $(function(){
 	});
 
 	// hook up item insertion
-	$('body').on('click', '#items li img', function(e){
-		browser.selectItem(e.target);
+	$('body').on('click', '#items li a.rich-no-link', function(e){
+		browser.selectItem($(e.target).parent().parent().find('img')[0]);
+	});
+
+	$('body').on('click', '#items li a.rich-has-link', function(e){
+		browser.selectItem($(e.target).parent().parent().find('img')[0]);
 	});
 
 	// fluid pagination
